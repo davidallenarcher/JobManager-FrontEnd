@@ -1,0 +1,25 @@
+<ng-container *ngIf="isActive(job); else elseBlock">
+    <div class="jobRow">
+        <div class="jobStatus" >
+            <select  #jobStatus [value]="job.jobStatus" (change)="updateJobStatus()">
+                <option value="NEW">New</option>
+                <option value="IGNORE">Ignore</option>
+                <option value="APPLIED">Applied</option>
+                <option value="SHOULD_APPLY">Apply</option>
+            </select>
+        </div>
+        <div style="color: grey; padding: 0 4px 0 0; font-size: 8pt;" >{{job.source}}</div>
+        <div><a href="{{job.linkAddress}}">{{job.title}}</a></div>
+    </div>
+</ng-container>
+<ng-template #elseBlock>
+    <div class="jobRow">
+        <!-- On hover change Expired label to Remove or Delete button -->
+        <div class="jobStatus" (mouseenter)="showRemove(true)" (mouseleave)="showRemove(false)">
+            <div *ngIf="showDeleteButton" (click)="delete()" style="color: red; cursor: pointer;">DELETE</div>
+            <div *ngIf="!showDeleteButton" style="color: red;">EXPIRED</div>
+        </div> 
+        <div style="color: grey; padding: 0 4px 0 0; font-size: 8pt;">{{job.source}}</div>
+        <div style="text-decoration: line-through;">{{job.title}}</div>
+    </div>
+</ng-template>

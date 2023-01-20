@@ -1,0 +1,18 @@
+<ng-container *ngIf="jobs.length > 0; else loading">
+    <H1>JOB OPPORTUNITIES</H1>
+    <ng-container *ngFor="let job of jobs; let i = index">
+        <app-jobs-row *ngIf="job.jobStatus != 'IGNORE'" [(job)] = "jobs[i]" (jobDelete)="updateJobs()"></app-jobs-row>
+    </ng-container>
+    <H1>IGNORED JOBS</H1>
+    <ng-container *ngFor="let job of jobs; let i = index">
+        <app-jobs-row *ngIf="job.jobStatus == 'IGNORE'" [(job)] = "jobs[i]" (jobDelete)="updateJobs()"></app-jobs-row>
+    </ng-container>
+</ng-container>
+<ng-template #loading>
+    <ng-container *ngIf="!errorMessage; else error">
+        Loading...
+    </ng-container>
+    <ng-template #error>
+        {{errorMessage}}
+    </ng-template>
+</ng-template>
