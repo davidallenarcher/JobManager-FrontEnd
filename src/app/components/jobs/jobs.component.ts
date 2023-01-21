@@ -10,7 +10,7 @@ import { interval, Observable, Subscription, switchMap, takeUntil, timer } from 
 })
 
 export class JobsComponent implements OnInit {
-  jobs: Job[] = {} as Job[];
+  jobs: Job[] | undefined;
   updateSubscription: Subscription = new Subscription();
   errorMessage: String | undefined;
 
@@ -18,7 +18,8 @@ export class JobsComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateJobs();
-    this.updateSubscription = interval(5 * 60 * 1000).subscribe(
+    //this.updateSubscription = interval(5 * 60 * 1000).subscribe(
+    this.updateSubscription = interval(30 * 1000).subscribe(
       (val) => { this.updateJobs() }
     );
   }
@@ -28,13 +29,16 @@ export class JobsComponent implements OnInit {
   }
 
   updateJobs() {
+    this.errorMessage = undefined;
     console.log("updating %s", new Date(Date.now()));
-    this.jobsService.getJobs().subscribe(
-      jobs => {
-        this.jobs = jobs.sort((a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime());
+    this.jobsService.getJobs().subscribe({
+      next: jobs => {
+        this.jobs = jobs.sort((a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime())
       },
-      error => {
+      error: error => {
+        this.jobs = undefined;
         this.errorMessage = 'Unable to load jobs from server :/'
-      });
+      }
+    })
   }
 }
