@@ -11,6 +11,9 @@
         <div style="color: grey; padding: 0 4px 0 0; font-size: 8pt; width: 60px; text-align: center;" >{{job.source}}</div>
         <div><a href="{{job.linkAddress}}" target="_blank" rel="noopener noreferrer">{{job.title}}</a></div>
     </div>
+    <div>
+        <textarea>{{job.description}}</textarea>
+    </div>
 </ng-container>
 <ng-template #elseBlock>
     <div class="jobRow">
