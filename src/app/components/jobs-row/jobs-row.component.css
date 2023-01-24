@@ -2,7 +2,7 @@
     width: 100%;
 }
 
-.jobRow > div {
+.jobRow > div > div {
     display: inline-block;
 }
 
@@ -10,4 +10,14 @@
     width: 80px;
     overflow: hidden;
     text-align: center;
+}
+
+.visible {
+    height: 100px;
+    visibility: visible;
+}
+
+.hidden {
+    height: 0px;
+    visibility: collapse;
 }

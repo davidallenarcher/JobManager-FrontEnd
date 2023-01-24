@@ -27,6 +27,23 @@ export class JobsRowComponent {
   @Output() jobDelete: EventEmitter<Job> = new EventEmitter();
 
   @ViewChild('jobStatus') jobStatus!: ElementRef;
+  @ViewChild('notes') notes! : ElementRef;
+
+  showNotes(visible: boolean) {
+    if (visible) {
+      //this.notes.nativeElement.style.setProperty('visibility', 'visible');
+      if (!this.notes.nativeElement.classList.contains('visible')) {
+        this.notes.nativeElement.classList.add('visible');
+        this.notes.nativeElement.classList.remove('hidden');
+      }
+    } else {
+      //this.notes.nativeElement.style.setProperty('visibility', 'hidden');
+      if (this.notes.nativeElement.classList.contains('visible')) {
+        this.notes.nativeElement.classList.add('hidden');
+        this.notes.nativeElement.classList.remove('visible');
+      }
+    }
+  }
 
   isActive(job: Job): boolean {
     return (Date.now() - new Date(job.lastUpdated).getTime()) < 10 * 60 * 1000;
