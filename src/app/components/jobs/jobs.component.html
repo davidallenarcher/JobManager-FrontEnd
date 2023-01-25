@@ -1,11 +1,50 @@
+<ng-container *ngIf="!errorMessage; else error">
+    <ng-container *ngIf="jobsNew && jobsNew.length > 0">
+        <H1>{{jobsNew.length}} - NEW</H1>
+        <ng-container *ngFor="let job of jobsNew; let index=index;">
+            <app-jobs-row [(job)] = "jobsNew[index]" (jobDelete)="updateJobs()" placeholder="job"></app-jobs-row>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngIf="jobsApply && jobsApply.length > 0">
+        <H1>{{jobsApply.length}} - APPLY TO THESE</H1>
+        <ng-container *ngFor="let job of jobsApply; let index=index;">
+            <app-jobs-row [(job)] = "jobsApply[index]" (jobDelete)="updateJobs()" placeholder="job"></app-jobs-row>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngIf="jobsApplied && jobsApplied.length > 0">
+        <H1>{{jobsApplied.length}} - HOPE TO HEAR BACK SOON</H1>
+        <ng-container *ngFor="let job of jobsApplied; let index=index;">
+            <app-jobs-row [(job)] = "jobsApplied[index]" (jobDelete)="updateJobs()" placeholder="job"></app-jobs-row>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngIf="jobsSeen&& jobsSeen.length > 0">
+        <H1>{{jobsSeen.length}} - TAKE A CLOSER LOOK AT THESE</H1>
+        <ng-container *ngFor="let job of jobsSeen; let index=index;">
+            <app-jobs-row [(job)] = "jobsSeen[index]" (jobDelete)="updateJobs()" placeholder="job"></app-jobs-row>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngIf="jobsIgnored && jobsIgnored.length > 0">
+        <H1>{{jobsIgnored.length}} - HARD PASS</H1>
+        <ng-container *ngFor="let job of jobsIgnored; let index=index;">
+            <app-jobs-row [(job)] = "jobsIgnored[index]" (jobDelete)="updateJobs()" placeholder="job"></app-jobs-row>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngIf="jobsExpired && jobsExpired.length > 0">
+        <H1>{{jobsExpired.length}} - IT'S TOO LATE FOR THESE</H1>
+        <ng-container *ngFor="let job of jobsExpired; let index=index;">
+            <app-jobs-row [(job)] = "jobsExpired[index]" (jobDelete)="updateJobs()" placeholder="job"></app-jobs-row>
+        </ng-container>
+    </ng-container>
+</ng-container>
+<ng-template #error>
+    {{errorMessage}}
+</ng-template>
+
+<!--
 <ng-container *ngIf="jobs && jobs.length > 0; else loading">
     <H1>JOB OPPORTUNITIES</H1>
-    <ng-container *ngFor="let job of jobs; let i = index">
-        <app-jobs-row *ngIf="job.jobStatus != 'IGNORE'" [(job)] = "jobs[i]" (jobDelete)="updateJobs()"></app-jobs-row>
-    </ng-container>
-    <H1>IGNORED JOBS</H1>
-    <ng-container *ngFor="let job of jobs; let i = index">
-        <app-jobs-row *ngIf="job.jobStatus == 'IGNORE'" [(job)] = "jobs[i]" (jobDelete)="updateJobs()"></app-jobs-row>
+    <ng-container *ngFor= "let job of jobs; let index=index;">
+        <app-jobs-row [(job)] = "jobs[index]" (jobDelete)="updateJobs()" placeholder="job"></app-jobs-row>
     </ng-container>
 </ng-container>
 <ng-template #loading>
@@ -16,3 +55,4 @@
         {{errorMessage}}
     </ng-template>
 </ng-template>
+-->

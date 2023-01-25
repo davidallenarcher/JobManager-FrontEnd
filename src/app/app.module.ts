@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { JobsComponent } from './components/jobs/jobs.component';
-import { JobsRowComponent } from './components/jobs-row/jobs-row.component';
+import { JobsRowComponent } from './components/job-row/job-row.component';
 
 @NgModule({
   declarations: [

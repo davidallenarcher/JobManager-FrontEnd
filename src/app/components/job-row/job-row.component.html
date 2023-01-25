@@ -1,5 +1,5 @@
 <ng-container *ngIf="isActive(job); else elseBlock">
-    <div class="jobRow" (click)="showNotes(true)">
+    <div class="jobRow">
         <div>
             <div class="jobStatus" >
                 <select  #jobStatus [value]="job.jobStatus" (change)="updateJobStatus()">
@@ -7,13 +7,11 @@
                     <option value="IGNORE">Ignore</option>
                     <option value="APPLIED">Applied</option>
                     <option value="SHOULD_APPLY">Apply</option>
+                    <option value="SEEN">Seen</option>
                 </select>
             </div>
             <div style="color: grey; padding: 0 4px 0 0; font-size: 8pt; width: 60px; text-align: center;" >{{job.source}}</div>
             <div><a href="{{job.linkAddress}}" target="_blank" rel="noopener noreferrer">{{job.title}}</a></div>
-        </div>
-        <div (mouseleave)="showNotes(false)">
-            <textarea #notes class="hidden" style="resize: none; width: 100%;">{{job.description}}</textarea>
         </div>
     </div>
 </ng-container>

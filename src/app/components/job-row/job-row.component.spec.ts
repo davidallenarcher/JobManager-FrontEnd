@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JobsRowComponent } from './jobs-row.component';
+import { JobsRowComponent } from './job-row.component';
 
 describe('JobRowComponent', () => {
   let component: JobsRowComponent;

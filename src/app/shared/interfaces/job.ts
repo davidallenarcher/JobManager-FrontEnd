@@ -6,6 +6,7 @@ export interface Job {
     linkAddress: string;
     publishedDate: Date;
     createdDate: Date;
+    lastSeen: Date;
     lastUpdated: Date;
     notes: string;
     description: string;
