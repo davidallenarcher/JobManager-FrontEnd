@@ -29,8 +29,23 @@ export class JobsRowComponent {
   @ViewChild('jobStatus') jobStatus!: ElementRef;
   @ViewChild('notes') notes! : ElementRef;
 
-  isActive(job: Job): boolean {
-    return (Date.now() - new Date(job.lastSeen).getTime()) < 10 * 60 * 1000;
+  isActive(): boolean {
+    return (Date.now() - new Date(this.job.lastSeen).getTime()) < 10 * 60 * 1000;
+  }
+
+  getBackgroundColor(): string {
+    switch(this.job.jobStatus) {
+      case "NEW":
+        return '#99DD99';
+      case "SEEN":
+        return '#DDDD99';
+      case "IGNORE":
+        return '#DDDDDD';
+      case "PRIORITY_APPLY":
+        return '#DDDDFF';
+      default:
+        return '#FFFFFF';
+    }
   }
 
   delete() {

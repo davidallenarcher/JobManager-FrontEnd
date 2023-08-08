@@ -1,38 +1,8 @@
 <ng-container *ngIf="!errorMessage; else error">
-    <ng-container *ngIf="jobsNew && jobsNew.length > 0">
-        <H1>{{jobsNew.length}} - NEW</H1>
-        <ng-container *ngFor="let job of jobsNew; let index=index;">
-            <app-jobs-row [(job)] = "jobsNew[index]" (jobDelete)="updateJobs()"></app-jobs-row>
-        </ng-container>
-    </ng-container>
-    <ng-container *ngIf="jobsApply && jobsApply.length > 0">
-        <H1>{{jobsApply.length}} - APPLY TO THESE</H1>
-        <ng-container *ngFor="let job of jobsApply; let index=index;">
-            <app-jobs-row [(job)] = "jobsApply[index]" (jobDelete)="updateJobs()"></app-jobs-row>
-        </ng-container>
-    </ng-container>
-    <ng-container *ngIf="jobsApplied && jobsApplied.length > 0">
-        <H1>{{jobsApplied.length}} - HOPE TO HEAR BACK SOON</H1>
-        <ng-container *ngFor="let job of jobsApplied; let index=index;">
-            <app-jobs-row [(job)] = "jobsApplied[index]" (jobDelete)="updateJobs()"></app-jobs-row>
-        </ng-container>
-    </ng-container>
-    <ng-container *ngIf="jobsSeen&& jobsSeen.length > 0">
-        <H1>{{jobsSeen.length}} - TAKE A CLOSER LOOK AT THESE</H1>
-        <ng-container *ngFor="let job of jobsSeen; let index=index;">
-            <app-jobs-row [(job)] = "jobsSeen[index]" (jobDelete)="updateJobs()"></app-jobs-row>
-        </ng-container>
-    </ng-container>
-    <ng-container *ngIf="jobsIgnored && jobsIgnored.length > 0">
-        <H1>{{jobsIgnored.length}} - HARD PASS</H1>
-        <ng-container *ngFor="let job of jobsIgnored; let index=index;">
-            <app-jobs-row [(job)] = "jobsIgnored[index]" (jobDelete)="updateJobs()"></app-jobs-row>
-        </ng-container>
-    </ng-container>
-    <ng-container *ngIf="jobsExpired && jobsExpired.length > 0">
-        <H1>{{jobsExpired.length}} - IT'S TOO LATE FOR THESE</H1>
-        <ng-container *ngFor="let job of jobsExpired; let index=index;">
-            <app-jobs-row [(job)] = "jobsExpired[index]" (jobDelete)="updateJobs()"></app-jobs-row>
+    <input type="checkbox" [checked]=hideIgnored (change)="setHideIgnored($event)"/>Hide Ignored
+    <ng-container *ngIf="jobsSorted && jobsSorted.length > 0">
+        <ng-container *ngFor="let job of jobsSorted; let index=index;">
+            <app-jobs-row [(job)] = "jobsSorted[index]" (jobDelete)="updateJobs()"></app-jobs-row>
         </ng-container>
     </ng-container>
 </ng-container>

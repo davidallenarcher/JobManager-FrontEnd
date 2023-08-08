@@ -1,30 +1,26 @@
-<ng-container *ngIf="isActive(job); else elseBlock">
-    <div class="jobRow">
-        <div>
-            <div class="jobStatus" >
-                <select  #jobStatus [value]="job.jobStatus" (change)="updateJobStatus()">
-                    <option value="NEW">New</option>
-                    <option value="IGNORE">Ignore</option>
-                    <option value="APPLIED">Applied</option>
-                    <option value="SHOULD_APPLY">Apply</option>
-                    <option value="SEEN">Seen</option>
-                </select>
-            </div>
-            <div style="color: grey; padding: 0 4px 0 0; font-size: 8pt; width: 60px; text-align: center;" >{{job.source}}</div>
-            <div><a href="{{job.linkAddress}}" target="_blank" rel="noopener noreferrer">{{job.title}}</a></div>
+<div class="jobRow">
+    <div [style.background-color]="getBackgroundColor()">
+        <div style="width: 20px;">
+            <ng-container *ngIf="!isActive()">
+                <div class="jobStatus" (mouseenter)="showRemove(true)" (mouseleave)="showRemove(false)">
+                    <div *ngIf="showDeleteButton" (click)="delete()" style="color: red; cursor: pointer;">X</div>
+                    <div *ngIf="!showDeleteButton" style="color: black;">X</div>
+                </div> 
+            </ng-container>
         </div>
-    </div>
-</ng-container>
-<ng-template #elseBlock>
-    <div class="jobRow">
-        <div>
-            <!-- On hover change Expired label to Remove or Delete button -->
-            <div class="jobStatus" (mouseenter)="showRemove(true)" (mouseleave)="showRemove(false)">
-                <div *ngIf="showDeleteButton" (click)="delete()" style="color: red; cursor: pointer;">DELETE</div>
-                <div *ngIf="!showDeleteButton" style="color: red; width: 60px; text-align: center;">EXPIRED</div>
-            </div> 
-            <div style="color: grey; padding: 0 4px 0 0; font-size: 8pt;">{{job.source}}</div>
-            <div style="text-decoration: line-through;">{{job.title}}</div>
+        <div class="jobStatus">
+            <select  #jobStatus [value]="job.jobStatus" (change)="updateJobStatus()">
+                <option value="NEW">New</option>
+                <option value="IGNORE">Ignore</option>
+                <option value="APPLIED">Applied</option>
+                <option value="SHOULD_APPLY">Apply</option>
+                <option value="SEEN">Seen</option>
+                <option value="PRIORITY_APPLY">Priority</option>
+                <option value="INTERVIEW_SCHEDULED">Interview</option>
+                <option value="REJECTED">Rejected</option>
+            </select>
         </div>
+        <div style="color: grey; padding: 0 4px 0 0; font-size: 8pt; width: 80px; text-align: center;" >{{job.source}}</div>
+        <div><a href="{{job.linkAddress}}" target="_blank" rel="noopener noreferrer">{{job.title}}</a></div>
     </div>
-</ng-template>
+</div>

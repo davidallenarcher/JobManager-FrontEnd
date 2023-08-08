@@ -14,16 +14,21 @@ export class JobsComponent implements OnInit {
 
   private jobsRaw: Job[] | undefined;
 
-  jobsNew: Job[] | undefined;
-  jobsApply: Job[] | undefined;
-  jobsApplied: Job[] | undefined;
-  jobsSeen: Job[] | undefined;
-  jobsIgnored: Job[] | undefined;
-  jobsExpired: Job[] | undefined;
+  hideIgnored = true;
 
+  jobsSorted: Job[] | undefined;
+
+  jobSources: string[] | undefined;
+  
   errorMessage: String | undefined;
 
   constructor(private jobsService: JobsService) {}
+
+  setHideIgnored(event: Event): any {
+    let checkbox = event.target as HTMLInputElement;
+    this.hideIgnored = checkbox.checked;
+    this.sortJobs();
+  }
 
   ngOnInit(): void {
     this.updateJobs();
@@ -32,8 +37,23 @@ export class JobsComponent implements OnInit {
     );
   }
 
-  private isExpired(job: Job): boolean {
-    return (Date.now() - new Date(job.lastSeen).getTime()) > 10 * 60 * 1000;
+  sortTemp(a: Job, b: Job): number {
+    if (a.jobStatus < b.jobStatus) 
+      return -1;
+    if (a.jobStatus > b.jobStatus)
+      return 1;
+    return (a.title < b.title)?-1:1;
+  }
+
+  sortJobs(): void {
+    if (this.jobsRaw) {
+      this.jobsSorted = this.jobsRaw
+        //.sort((a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime());
+        //.sort((a, b) => (a.jobStatus < b.jobStatus)?-1:(a.title > b.title)?-1:1)
+        //.sort((a, b) => ((a.jobStatus === b.jobStatus)?((a.title < b.title)?-1:1):((a.jobStatus < b.jobStatus)?-1:1)))
+        .sort((a,b) => (a.title < b.title)?-1:1)
+        .filter(job => (job.jobStatus !== "IGNORE" || !this.hideIgnored));
+    }
   }
 
   updateJobs() {
@@ -42,27 +62,12 @@ export class JobsComponent implements OnInit {
     this.jobsService.getJobs().subscribe({
       next: jobs => {
         this.jobsRaw = jobs;
-        this.jobsNew = this.jobsRaw
-          .filter(job => job.jobStatus === "NEW" && !this.isExpired(job))
-          .sort((a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime());
-        this.jobsIgnored = this.jobsRaw
-          .filter(job => job.jobStatus === "IGNORE" && !this.isExpired(job))
-          .sort((a, b) => new Date(a.lastUpdated).getTime() - new Date(b.lastUpdated).getTime());
-        this.jobsApplied = this.jobsRaw
-          .filter(job => job.jobStatus === "APPLIED" && !this.isExpired(job))
-          .sort((a, b) => new Date(a.lastUpdated).getTime() - new Date(b.lastUpdated).getTime());
-        this.jobsApply = this.jobsRaw
-          .filter(job => job.jobStatus === "SHOULD_APPLY" && !this.isExpired(job))
-          .sort((a, b) => new Date(a.lastUpdated).getTime() - new Date(b.lastUpdated).getTime());
-        this.jobsSeen = this.jobsRaw
-          .filter(job => job.jobStatus === "SEEN" && !this.isExpired(job))
-          .sort((a, b) => new Date(a.lastUpdated).getTime() - new Date(b.lastUpdated).getTime());
-        this.jobsExpired = this.jobsRaw
-          .filter(job => this.isExpired(job))
-          .sort((a, b) => new Date(a.lastSeen).getTime() - new Date(b.lastSeen).getTime());
+        this.sortJobs();
       },
       error: () => {
         this.jobsRaw = undefined;
+        this.jobsSorted = undefined;
+        this.jobSources = undefined;
         this.errorMessage = 'Unable to load jobs from server :/'
       }
     })

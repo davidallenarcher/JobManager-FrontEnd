@@ -10,14 +10,14 @@ export class JobsService {
 
   constructor(private http: HttpClient) { }
 
-  urlAddress = 'http://localhost:8080/api/jobs';
+  urlAddress = 'http://localhost:8080/jobs';
 
   getJobs(): Observable<Job[]> {
     return this.http.get<Job[]>(this.urlAddress);
   }
 
   deleteJob(id: Number) {
-    return this.http.delete('http://localhost:8080/api/job/' + id);
+    return this.http.delete('http://localhost:8080/job/' + id);
   } 
 
 /*
@@ -27,10 +27,10 @@ export class JobsService {
 //*/
 
   updateJobStatus(id: Number, job: Job) {
-    return this.http.patch<any>('http://localhost:8080/api/job/' + id + '/status', job);
+    return this.http.patch<any>('http://localhost:8080/job/' + id + '/status', job);
   }
 
   updateJobNotes(id: Number, job: Job) {
-    return this.http.patch<any>('http://localhost:8080/api/job/' + id + '/notes', job);
+    return this.http.patch<any>('http://localhost:8080/job/' + id + '/notes', job);
   }
 }
